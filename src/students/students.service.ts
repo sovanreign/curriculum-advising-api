@@ -35,6 +35,10 @@ export class StudentsService {
     });
   }
 
+  findOneByUsername(username: string) {
+    return this.db.student.findFirst({ where: { username } });
+  }
+
   async update(id: number, updateStudentDto: UpdateStudentDto) {
     if (
       updateStudentDto.password !== '' ||

@@ -5,5 +5,6 @@ import { DeansController } from './deans.controller';
 @Module({
   controllers: [DeansController],
   providers: [DeansService],
+  exports: [DeansService],
 })
 export class DeansModule {}

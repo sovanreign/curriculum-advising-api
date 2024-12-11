@@ -33,6 +33,10 @@ export class DeansService {
     });
   }
 
+  findOneByUsername(username: string) {
+    return this.db.dean.findFirst({ where: { username } });
+  }
+
   async update(id: number, updateDeanDto: UpdateDeanDto) {
     if (updateDeanDto.password !== '' || updateDeanDto.password !== null) {
       updateDeanDto.password = await passwordEncryption(updateDeanDto.password);

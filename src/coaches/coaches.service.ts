@@ -33,6 +33,10 @@ export class CoachesService {
     });
   }
 
+  findOneByUsername(username: string) {
+    return this.db.coach.findFirst({ where: { username } });
+  }
+
   async update(id: number, updateCoachDto: UpdateCoachDto) {
     if (updateCoachDto.password !== '' || updateCoachDto.password !== null) {
       updateCoachDto.password = await passwordEncryption(

@@ -6,6 +6,7 @@ import { ProgramsModule } from './programs/programs.module';
 import { DeansModule } from './deans/deans.module';
 import { StudentsModule } from './students/students.module';
 import { CoachesModule } from './coaches/coaches.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CoachesModule } from './coaches/coaches.module';
     DeansModule,
     StudentsModule,
     CoachesModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
