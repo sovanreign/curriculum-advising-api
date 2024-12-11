@@ -19,6 +19,13 @@ enum Role {
   DEAN
 }
 
+enum YearLevel {
+  FIRST
+  SECOND
+  THIRD
+  FOURTH
+}
+
 model Department {
   id Int @id @default(autoincrement())
   code String @unique
@@ -27,6 +34,7 @@ model Department {
   updatedAt DateTime @updatedAt
 
   programs Program[]
+  dean Dean?
 }
 
 model Program {
@@ -39,4 +47,62 @@ model Program {
 
   departmentId Int
   department Department @relation(fields: [departmentId], references: [id])
+
+  students Student[]
+  coaches Coach[]
+}
+
+model Dean {
+  id Int @id @default(autoincrement())
+  username String @unique
+  email String @unique
+  password String
+  firstName String
+  lastName String
+  deanId String @unique
+  contact String?
+  address String?
+  role Role @default(DEAN)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  departmentId Int @unique 
+  department Department @relation(fields: [departmentId], references: [id])
+}
+
+model Student {
+  id Int @id @default(autoincrement())
+  username String @unique
+  email String @unique
+  password String
+  firstName String
+  lastName String
+  studentId String @unique
+  yearLevel YearLevel @default(FIRST)
+  contact String?
+  address String?
+  role Role @default(STUDENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  programId Int
+  program Program @relation(fields: [programId], references: [id])
+}
+
+model Coach {
+  id Int @id @default(autoincrement())
+  username String @unique
+  email String @unique
+  password String
+  firstName String
+  lastName String
+  coachId String @unique
+  contact String?
+  address String?
+  role Role @default(COACH)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  programId Int
+  program Program @relation(fields: [programId], references: [id])
 }
