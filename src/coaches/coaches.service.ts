@@ -3,6 +3,7 @@ import { CreateCoachDto } from './dto/create-coach.dto';
 import { UpdateCoachDto } from './dto/update-coach.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { passwordEncryption } from 'src/utils/password-encryption.util';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class CoachesService {
@@ -16,10 +17,38 @@ export class CoachesService {
     });
   }
 
-  findAll() {
+  findAll(q?: string, filterByYearLevel?: string, filterByProgram?: number) {
+    const where: Prisma.CoachWhereInput = {};
+
+    // Search query filter
+    if (q) {
+      where.OR = [
+        {
+          firstName: { contains: q, mode: 'insensitive' },
+        },
+        {
+          lastName: { contains: q, mode: 'insensitive' },
+        },
+        {
+          coachId: { contains: q, mode: 'insensitive' },
+        },
+      ];
+    }
+
+    // Program filter
+    if (filterByProgram) {
+      where.programId = filterByProgram;
+    }
+
     return this.db.coach.findMany({
+      where,
       include: {
         program: true,
+        assignments: {
+          include: {
+            student: true,
+          },
+        },
       },
     });
   }

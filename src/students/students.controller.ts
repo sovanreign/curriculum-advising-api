@@ -8,6 +8,7 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { StudentsService } from './students.service';
 import { CreateStudentDto } from './dto/create-student.dto';
@@ -23,8 +24,12 @@ export class StudentsController {
   }
 
   @Get()
-  findAll() {
-    return this.studentsService.findAll();
+  findAll(
+    @Query('q') q: string,
+    @Query('filterByYearLevel') filterByYearLevel: string,
+    @Query('filterByProgram') filterByProgram: string,
+  ) {
+    return this.studentsService.findAll(q, filterByYearLevel, +filterByProgram);
   }
 
   @Get(':id')

@@ -8,6 +8,7 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { CoachesService } from './coaches.service';
 import { CreateCoachDto } from './dto/create-coach.dto';
@@ -23,8 +24,11 @@ export class CoachesController {
   }
 
   @Get()
-  findAll() {
-    return this.coachesService.findAll();
+  findAll(
+    @Query('q') q: string,
+    @Query('filterByProgram') filterByProgram: string,
+  ) {
+    return this.coachesService.findAll(q, filterByProgram);
   }
 
   @Get(':id')

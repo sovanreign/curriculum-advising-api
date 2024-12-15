@@ -87,6 +87,8 @@ model Student {
 
   programId Int
   program Program @relation(fields: [programId], references: [id])
+
+  assignment Assignment? 
 }
 
 model Coach {
@@ -105,4 +107,18 @@ model Coach {
 
   programId Int
   program Program @relation(fields: [programId], references: [id])
+
+  assignments Assignment[]
+}
+
+model Assignment {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  studentId Int @unique
+  student Student @relation(fields: [studentId], references: [id])
+
+  coachId Int
+  coach Coach @relation(fields: [coachId], references: [id])
 }

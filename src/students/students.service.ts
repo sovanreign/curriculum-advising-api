@@ -3,6 +3,7 @@ import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { passwordEncryption } from 'src/utils/password-encryption.util';
+import { Prisma, YearLevel } from '@prisma/client';
 
 @Injectable()
 export class StudentsService {
@@ -18,10 +19,46 @@ export class StudentsService {
     });
   }
 
-  findAll() {
+  findAll(q?: string, filterByYearLevel?: string, filterByProgram?: number) {
+    const where: Prisma.StudentWhereInput = {};
+
+    // Search query filter
+    if (q) {
+      where.OR = [
+        {
+          firstName: { contains: q, mode: 'insensitive' },
+        },
+        {
+          lastName: { contains: q, mode: 'insensitive' },
+        },
+        {
+          studentId: { contains: q, mode: 'insensitive' },
+        },
+      ];
+    }
+
+    // Year level filter
+    if (
+      filterByYearLevel &&
+      Object.values(YearLevel).includes(filterByYearLevel as YearLevel)
+    ) {
+      where.yearLevel = filterByYearLevel as YearLevel;
+    }
+
+    // Program filter
+    if (filterByProgram) {
+      where.programId = filterByProgram;
+    }
+
     return this.db.student.findMany({
+      where,
       include: {
         program: true,
+        assignment: {
+          include: {
+            coach: true,
+          },
+        },
       },
     });
   }
