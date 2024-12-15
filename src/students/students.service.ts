@@ -59,6 +59,11 @@ export class StudentsService {
             coach: true,
           },
         },
+        studentCourse: {
+          include: {
+            course: true,
+          },
+        },
       },
     });
   }
@@ -68,6 +73,16 @@ export class StudentsService {
       where: { id },
       include: {
         program: true,
+        assignment: {
+          include: {
+            coach: true,
+          },
+        },
+        studentCourse: {
+          include: {
+            course: true,
+          },
+        },
       },
     });
   }

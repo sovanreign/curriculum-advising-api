@@ -26,6 +26,13 @@ enum YearLevel {
   FOURTH
 }
 
+enum Remark {
+  PASSED
+  FAILED
+  IP
+  HOLD
+}
+
 model Department {
   id Int @id @default(autoincrement())
   code String @unique
@@ -90,6 +97,7 @@ model Student {
   program Program @relation(fields: [programId], references: [id])
 
   assignment Assignment? 
+  studentCourse StudentCourse[]
 }
 
 model Coach {
@@ -152,4 +160,20 @@ model Course {
 
   programId Int
   program Program @relation(fields: [programId], references: [id])
+
+  studentCourses StudentCourse[]
+}
+
+model StudentCourse {
+  id Int @id @default(autoincrement())
+  noTake Int @default(1)
+  remark Remark @default(HOLD)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  studentId Int
+  student Student @relation(fields: [studentId], references: [id])
+
+  courseId Int
+  course Course @relation(fields: [courseId], references: [id])
 }

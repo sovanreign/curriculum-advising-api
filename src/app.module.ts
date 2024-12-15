@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { AssignmentsModule } from './assignments/assignments.module';
 import { CurriculumsModule } from './curriculums/curriculums.module';
 import { CoursesModule } from './courses/courses.module';
+import { StudentCourseModule } from './student-course/student-course.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { CoursesModule } from './courses/courses.module';
     AssignmentsModule,
     CurriculumsModule,
     CoursesModule,
+    StudentCourseModule,
   ],
   controllers: [],
   providers: [],
