@@ -8,6 +8,8 @@ import { StudentsModule } from './students/students.module';
 import { CoachesModule } from './coaches/coaches.module';
 import { AuthModule } from './auth/auth.module';
 import { AssignmentsModule } from './assignments/assignments.module';
+import { CurriculumsModule } from './curriculums/curriculums.module';
+import { CoursesModule } from './courses/courses.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { AssignmentsModule } from './assignments/assignments.module';
     CoachesModule,
     AuthModule,
     AssignmentsModule,
+    CurriculumsModule,
+    CoursesModule,
   ],
   controllers: [],
   providers: [],

@@ -50,6 +50,7 @@ model Program {
 
   students Student[]
   coaches Coach[]
+  courses Course[]
 }
 
 model Dean {
@@ -121,4 +122,34 @@ model Assignment {
 
   coachId Int
   coach Coach @relation(fields: [coachId], references: [id])
+}
+
+
+model Curriculum {
+  id Int @id @default(autoincrement())
+  code String
+  rev Int
+  effectivity String
+  cmoName String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  courses Course[] 
+}
+
+model Course {
+  id Int @id @default(autoincrement())
+  subject String
+  description String
+  units Int
+  sem Int
+  year YearLevel
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  curriculumId Int
+  curriculum Curriculum @relation(fields: [curriculumId], references: [id])
+
+  programId Int
+  program Program @relation(fields: [programId], references: [id])
 }
