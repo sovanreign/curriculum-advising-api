@@ -9,6 +9,17 @@ import { Prisma } from '@prisma/client';
 export class CoachesService {
   constructor(private db: DatabaseService) {}
 
+  async uploadCoaches(coaches: CreateCoachDto[]) {
+    for (const coach of coaches) {
+      coach.programId = Number(coach.programId);
+      coach.password = await passwordEncryption(coach.password); // This will now properly await
+    }
+
+    return this.db.coach.createMany({
+      data: coaches,
+    });
+  }
+
   async create(createCoachDto: CreateCoachDto) {
     createCoachDto.password = await passwordEncryption(createCoachDto.password);
 

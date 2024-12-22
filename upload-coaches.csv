@@ -1,0 +1,5 @@
+username,email,password,firstName,lastName,coachId,contact,address,programId
+john.doe,john.doe@gmail.com,password,John,Doe,C01-0001,09171111111,"123 Training Rd, Manila",1
+jane.smith,jane.smith@yahoo.com,password,Jane,Smith,C02-0002,09172222222,"456 Sports Ave, Quezon City",2
+michael.jones,michael.jones@outlook.com,password,Michael,Jones,C03-0003,09173333333,"789 Fitness Blvd, Cebu City",3
+emma.wilson,emma.wilson@gmail.com,password,Emma,Wilson,C04-0004,09174444444,"101 Coaching St, Davao City",4

@@ -32,4 +32,18 @@ Note: make sure to replace **\<username>** and **\<password>** with your postgre
 
 #### 6. Run "npx prisma migrate dev" in the terminal
 
-#### 7. Run the application using "pnpm run start:dev"
+#### 7. Load the initial data
+
+```bash
+pnpm run seed
+```
+
+#### 8. Run the application
+
+```bash
+pnpm run start:dev
+```
+
+### Note:
+
+check postman-import.json for Postman API routes and upload-students and upload-coaches csv file for uploading a csv.

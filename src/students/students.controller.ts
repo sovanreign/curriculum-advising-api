@@ -9,14 +9,38 @@ import {
   HttpCode,
   HttpStatus,
   Query,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { StudentsService } from './students.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import * as csv from 'csv-parser';
+import { Readable } from 'stream';
 
 @Controller('api/students')
 export class StudentsController {
   constructor(private readonly studentsService: StudentsService) {}
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadStudents(@UploadedFile() file: Express.Multer.File) {
+    const records: any[] = [];
+    const stream = Readable.from(file.buffer.toString());
+
+    await new Promise((resolve, reject) => {
+      stream
+        .pipe(csv())
+        .on('data', (row) => {
+          records.push(row);
+        })
+        .on('end', resolve)
+        .on('error', reject);
+    });
+
+    return this.studentsService.uploadStudents(records);
+  }
 
   @Post()
   create(@Body() createStudentDto: CreateStudentDto) {

@@ -9,6 +9,17 @@ import { Prisma, YearLevel } from '@prisma/client';
 export class StudentsService {
   constructor(private db: DatabaseService) {}
 
+  async uploadStudents(students: CreateStudentDto[]) {
+    for (const student of students) {
+      student.programId = Number(student.programId);
+      student.password = await passwordEncryption(student.password); // This will now properly await
+    }
+
+    return this.db.student.createMany({
+      data: students,
+    });
+  }
+
   async create(createStudentDto: CreateStudentDto) {
     createStudentDto.password = await passwordEncryption(
       createStudentDto.password,

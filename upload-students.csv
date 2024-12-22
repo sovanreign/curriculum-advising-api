@@ -1,0 +1,6 @@
+username,email,password,firstName,lastName,studentId,contact,address,yearLevel,programId
+alice.smith,alice.smith@gmail.com,password,Alice,Smith,01-0001,09171234567,"123 Rizal St, Manila",FIRST,1
+bob.johnson,bob.johnson@yahoo.com,password,Bob,Johnson,01-0002,09181234567,"456 Bonifacio Ave, Quezon City",SECOND,1
+charlie.brown,charlie.brown@outlook.com,password,Charlie,Brown,01-0003,09192234567,"789 Mabini St, Cebu City",THIRD,1
+diana.taylor,diana.taylor@gmail.com,password,Diana,Taylor,01-0004,09201234567,"101 Aguinaldo Blvd, Davao City",FOURTH,1
+ethan.anderson,ethan.anderson@gmail.com,password,Ethan,Anderson,01-0005,09211234567,"202 Del Pilar Rd, Baguio City",FIRST,1

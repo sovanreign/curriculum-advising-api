@@ -581,6 +581,34 @@
 			"name": "Coach",
 			"item": [
 				{
+					"name": "Upload coaches",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/home/sovanreign/Downloads/coaches.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/coaches/upload",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"coaches",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create coach",
 					"request": {
 						"method": "POST",
@@ -703,6 +731,34 @@
 		{
 			"name": "Student",
 			"item": [
+				{
+					"name": "Upload students",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/home/sovanreign/Downloads/philippines_students.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/students/upload",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"students",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Create student",
 					"request": {

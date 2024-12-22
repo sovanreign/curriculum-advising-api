@@ -19,6 +19,10 @@ export class DepartmentsService {
     return this.db.department.findUniqueOrThrow({ where: { id } });
   }
 
+  findOneById(id: number) {
+    return this.db.department.findFirst({ where: { id } });
+  }
+
   update(id: number, updateDepartmentDto: UpdateDepartmentDto) {
     return this.db.department.update({
       where: { id },

@@ -46,4 +46,8 @@ export class AuthService {
       access_token: this.jwtService.sign(payload),
     };
   }
+
+  getProfile(id: number) {
+    return this.deansService.findOne(id);
+  }
 }
