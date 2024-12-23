@@ -69,6 +69,19 @@ export class CoachesService {
       where: { id },
       include: {
         program: true,
+        assignments: {
+          include: {
+            student: {
+              include: {
+                studentCourse: {
+                  include: {
+                    course: true,
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     });
   }
@@ -78,7 +91,7 @@ export class CoachesService {
   }
 
   async update(id: number, updateCoachDto: UpdateCoachDto) {
-    if (updateCoachDto.password !== '' || updateCoachDto.password !== null) {
+    if (updateCoachDto.password) {
       updateCoachDto.password = await passwordEncryption(
         updateCoachDto.password,
       );

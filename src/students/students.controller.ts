@@ -23,6 +23,11 @@ import { Readable } from 'stream';
 export class StudentsController {
   constructor(private readonly studentsService: StudentsService) {}
 
+  @Delete('bulk')
+  async removeMany(@Body('ids') ids: number[]) {
+    return this.studentsService.removeMany(ids);
+  }
+
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadStudents(@UploadedFile() file: Express.Multer.File) {

@@ -38,7 +38,7 @@ export class DeansService {
   }
 
   async update(id: number, updateDeanDto: UpdateDeanDto) {
-    if (updateDeanDto.password !== '' || updateDeanDto.password !== null) {
+    if (updateDeanDto.password) {
       updateDeanDto.password = await passwordEncryption(updateDeanDto.password);
     }
 

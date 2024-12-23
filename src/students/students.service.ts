@@ -103,10 +103,7 @@ export class StudentsService {
   }
 
   async update(id: number, updateStudentDto: UpdateStudentDto) {
-    if (
-      updateStudentDto.password !== '' ||
-      updateStudentDto.password !== null
-    ) {
+    if (updateStudentDto.password) {
       updateStudentDto.password = await passwordEncryption(
         updateStudentDto.password,
       );
@@ -121,6 +118,14 @@ export class StudentsService {
   remove(id: number) {
     return this.db.student.delete({
       where: { id },
+    });
+  }
+
+  async removeMany(ids: number[]) {
+    return this.db.student.deleteMany({
+      where: {
+        id: { in: ids },
+      },
     });
   }
 }
