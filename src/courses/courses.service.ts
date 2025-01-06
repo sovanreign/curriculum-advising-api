@@ -8,6 +8,12 @@ import { Prisma, YearLevel } from '@prisma/client';
 export class CoursesService {
   constructor(private db: DatabaseService) {}
 
+  async uploadCourses(courses: CreateCourseDto[]) {
+    return this.db.course.createMany({
+      data: courses,
+    });
+  }
+
   create(createCourseDto: CreateCourseDto) {
     return this.db.course.create({
       data: createCourseDto,

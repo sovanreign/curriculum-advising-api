@@ -98,6 +98,7 @@ model Student {
 
   assignment Assignment? 
   studentCourse StudentCourse[]
+  acadForms AcadForm[]
 }
 
 model Coach {
@@ -176,4 +177,14 @@ model StudentCourse {
 
   courseId Int
   course Course @relation(fields: [courseId], references: [id])
+}
+
+model AcadForm {
+  id Int @id @default(autoincrement())
+  recommendation String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  studentId Int
+  student Student @relation(fields: [studentId], references: [id])
 }

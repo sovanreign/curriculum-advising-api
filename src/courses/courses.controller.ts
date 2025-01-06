@@ -9,14 +9,47 @@ import {
   HttpCode,
   HttpStatus,
   Query,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Readable } from 'stream';
+import * as csvParser from 'csv-parser';
+import { YearLevel } from '@prisma/client';
 
 @Controller('api/courses')
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadCourses(@UploadedFile() file: Express.Multer.File) {
+    const records: CreateCourseDto[] = [];
+    const stream = Readable.from(file.buffer.toString());
+
+    await new Promise<void>((resolve, reject) => {
+      stream
+        .pipe(csvParser())
+        .on('data', (row) => {
+          records.push({
+            subject: row.subject,
+            description: row.description,
+            units: Number(row.units),
+            sem: Number(row.sem),
+            year: row.year as YearLevel, // Adjust as needed if YearLevel is an enum
+            curriculumId: Number(row.curriculumId),
+            programId: Number(row.programId),
+          });
+        })
+        .on('end', resolve)
+        .on('error', reject);
+    });
+
+    return this.coursesService.uploadCourses(records);
+  }
 
   @Post()
   create(@Body() createCourseDto: CreateCourseDto) {

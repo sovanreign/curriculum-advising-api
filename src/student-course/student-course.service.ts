@@ -20,6 +20,9 @@ export class StudentCourseService {
   findOne(id: number) {
     return this.db.studentCourse.findUniqueOrThrow({
       where: { id },
+      include: {
+        course: true,
+      },
     });
   }
 

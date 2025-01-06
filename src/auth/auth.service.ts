@@ -47,7 +47,14 @@ export class AuthService {
     };
   }
 
-  getProfile(id: number) {
-    return this.deansService.findOne(id);
+  getProfile(id: number, role: Role) {
+    switch (role) {
+      case Role.STUDENT:
+        return this.studentsService.findOne(id);
+      case Role.COACH:
+        return this.coachesService.findOne(id);
+      default:
+        return this.deansService.findOne(id);
+    }
   }
 }
