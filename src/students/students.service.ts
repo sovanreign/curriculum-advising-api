@@ -10,13 +10,36 @@ export class StudentsService {
   constructor(private db: DatabaseService) {}
 
   async uploadStudents(students: CreateStudentDto[]) {
-    for (const student of students) {
-      student.programId = Number(student.programId);
-      student.password = await passwordEncryption(student.password); // This will now properly await
-    }
+    return this.db.$transaction(async (prisma) => {
+      for (const student of students) {
+        // Ensure programId is a number and encrypt the password
+        student.programId = Number(student.programId);
+        student.password = await passwordEncryption(student.password);
 
-    return this.db.student.createMany({
-      data: students,
+        // Create the student and retrieve their ID
+        const createdStudent = await prisma.student.create({
+          data: student,
+        });
+
+        // Fetch all courses belonging to the student's program
+        const courses = await prisma.course.findMany({
+          where: { programId: createdStudent.programId },
+        });
+
+        // Create StudentCourse records for the student with these courses
+        const studentCoursePromises = courses.map((course) =>
+          prisma.studentCourse.create({
+            data: {
+              studentId: createdStudent.id,
+              courseId: course.id,
+            },
+          }),
+        );
+
+        await Promise.all(studentCoursePromises);
+      }
+
+      return { message: `${students.length} students uploaded successfully` };
     });
   }
 

@@ -9,8 +9,32 @@ export class CoursesService {
   constructor(private db: DatabaseService) {}
 
   async uploadCourses(courses: CreateCourseDto[]) {
-    return this.db.course.createMany({
-      data: courses,
+    return this.db.$transaction(async (prisma) => {
+      for (const course of courses) {
+        // Create the course and get its ID
+        const createdCourse = await prisma.course.create({
+          data: course,
+        });
+
+        // Find students in the same program
+        const students = await prisma.student.findMany({
+          where: { programId: course.programId },
+        });
+
+        // Create StudentCourse records for each student
+        const studentCoursePromises = students.map((student) =>
+          prisma.studentCourse.create({
+            data: {
+              studentId: student.id,
+              courseId: createdCourse.id, // Use the created course's ID
+            },
+          }),
+        );
+
+        await Promise.all(studentCoursePromises);
+      }
+
+      return { message: `${courses.length} courses uploaded successfully` };
     });
   }
 

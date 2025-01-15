@@ -53,7 +53,7 @@ model Program {
   updatedAt DateTime @updatedAt
 
   departmentId Int
-  department Department @relation(fields: [departmentId], references: [id])
+  department Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
 
   students Student[]
   coaches Coach[]
@@ -75,7 +75,7 @@ model Dean {
   updatedAt DateTime @updatedAt
 
   departmentId Int @unique 
-  department Department @relation(fields: [departmentId], references: [id])
+  department Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
 }
 
 model Student {
@@ -94,7 +94,7 @@ model Student {
   updatedAt DateTime @updatedAt
 
   programId Int
-  program Program @relation(fields: [programId], references: [id])
+  program Program @relation(fields: [programId], references: [id], onDelete: Cascade)
 
   assignment Assignment? 
   studentCourse StudentCourse[]
@@ -116,7 +116,7 @@ model Coach {
   updatedAt DateTime @updatedAt
 
   programId Int
-  program Program @relation(fields: [programId], references: [id])
+  program Program @relation(fields: [programId], references: [id], onDelete: Cascade)
 
   assignments Assignment[]
 }
@@ -127,10 +127,10 @@ model Assignment {
   updatedAt DateTime @updatedAt
 
   studentId Int @unique
-  student Student @relation(fields: [studentId], references: [id])
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   coachId Int
-  coach Coach @relation(fields: [coachId], references: [id])
+  coach Coach @relation(fields: [coachId], references: [id], onDelete: Cascade)
 }
 
 
@@ -157,10 +157,10 @@ model Course {
   updatedAt DateTime @updatedAt
 
   curriculumId Int
-  curriculum Curriculum @relation(fields: [curriculumId], references: [id])
+  curriculum Curriculum @relation(fields: [curriculumId], references: [id], onDelete: Cascade)
 
   programId Int
-  program Program @relation(fields: [programId], references: [id])
+  program Program @relation(fields: [programId], references: [id], onDelete: Cascade)
 
   studentCourses StudentCourse[]
 }
@@ -173,10 +173,10 @@ model StudentCourse {
   updatedAt DateTime @updatedAt
 
   studentId Int
-  student Student @relation(fields: [studentId], references: [id])
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
-  courseId Int
-  course Course @relation(fields: [courseId], references: [id])
+  courseId Int?
+  course Course? @relation(fields: [courseId], references: [id], onDelete: SetNull)
 }
 
 model AcadForm {
@@ -186,5 +186,5 @@ model AcadForm {
   updatedAt DateTime @updatedAt
 
   studentId Int
-  student Student @relation(fields: [studentId], references: [id])
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
 }

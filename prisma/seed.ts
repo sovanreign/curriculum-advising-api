@@ -26,7 +26,22 @@ async function main() {
     },
   });
 
+  await prisma.curriculum.create({
+    data: {
+      cmoName: 'KT',
+      code: 'KT',
+      effectivity: '1st sem 2024',
+      rev: 50,
+    },
+  });
+
   const programs = [
+    {
+      uniqueId: 'BSIT',
+      code: 'BSIT',
+      name: 'Bachelor of Science in Information Technology',
+      departmentId: 1,
+    },
     {
       uniqueId: 'ACT',
       code: 'ACT',
@@ -37,12 +52,6 @@ async function main() {
       uniqueId: 'BLIS',
       code: 'BLIS',
       name: 'Bachelor of Library Information Science',
-      departmentId: 1,
-    },
-    {
-      uniqueId: 'BSIT',
-      code: 'BSIT',
-      name: 'Bachelor of Science in Information Technology',
       departmentId: 1,
     },
     {
