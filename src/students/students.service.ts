@@ -95,7 +95,11 @@ export class StudentsService {
         },
         studentCourse: {
           include: {
-            course: true,
+            course: {
+              include: {
+                curriculum: true,
+              },
+            },
           },
         },
       },
