@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateStudentCourseDto } from './dto/create-student-course.dto';
 import { UpdateStudentCourseDto } from './dto/update-student-course.dto';
 import { DatabaseService } from 'src/database/database.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class StudentCourseService {
@@ -13,8 +14,26 @@ export class StudentCourseService {
     });
   }
 
-  findAll() {
-    return this.db.studentCourse.findMany();
+  findAll(courseId?: number) {
+    let where: Prisma.StudentCourseWhereInput = {};
+
+    if (courseId) {
+      where = {
+        courseId,
+      };
+    }
+
+    return this.db.studentCourse.findMany({
+      where,
+      include: {
+        course: true,
+        student: {
+          include: {
+            program: true,
+          },
+        },
+      },
+    });
   }
 
   findOne(id: number) {

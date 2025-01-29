@@ -71,6 +71,9 @@ export class CoursesService {
 
     return this.db.course.findMany({
       where,
+      include: {
+        curriculum: true,
+      },
     });
   }
 
