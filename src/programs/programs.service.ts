@@ -20,6 +20,7 @@ export class ProgramsService {
             code: true,
           },
         },
+        coaches: true,
       },
     });
   }
