@@ -23,6 +23,12 @@ export class AcadformsService {
     });
   }
 
+  findOneByStudent(id: number) {
+    return this.db.acadForm.findFirstOrThrow({
+      where: { studentId: id },
+    });
+  }
+
   update(id: number, updateAcadformDto: UpdateAcadformDto) {
     return this.db.acadForm.update({
       where: { id },

@@ -27,6 +27,11 @@ export class AcadformsController {
     return this.acadformsService.findAll();
   }
 
+  @Get('student/:id')
+  findOneByStudent(@Param('id') id: string) {
+    return this.acadformsService.findOneByStudent(+id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.acadformsService.findOne(+id);
