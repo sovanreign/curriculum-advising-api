@@ -21,6 +21,11 @@ export class ProgramsService {
           },
         },
         coaches: true,
+        students: {
+          include: {
+            studentCourse: true,
+          },
+        },
       },
     });
   }

@@ -26,6 +26,20 @@ async function main() {
     },
   });
 
+  await prisma.head.create({
+    data: {
+      username: 'head',
+      password: pass,
+      firstName: 'Elon',
+      lastName: 'Musk',
+      headId: '01-1999',
+      email: 'spacex@gmail.com',
+      address: 'Silicon Valley',
+      contact: '+0187654321',
+      departmentId: 1,
+    },
+  });
+
   await prisma.curriculum.create({
     data: {
       cmoName: 'KT',

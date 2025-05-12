@@ -11,12 +11,14 @@ import { ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './jwt.strategy';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { HeadsModule } from 'src/heads/heads.module';
 
 @Module({
   imports: [
     DeansModule,
     CoachesModule,
     StudentsModule,
+    HeadsModule,
     PassportModule,
     JwtModule.registerAsync({
       inject: [ConfigService],

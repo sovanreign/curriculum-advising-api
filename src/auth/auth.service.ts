@@ -6,6 +6,7 @@ import { StudentsService } from 'src/students/students.service';
 
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { HeadsService } from 'src/heads/heads.service';
 
 @Injectable()
 export class AuthService {
@@ -13,6 +14,7 @@ export class AuthService {
     private deansService: DeansService,
     private coachesService: CoachesService,
     private studentsService: StudentsService,
+    private headsService: HeadsService,
     private jwtService: JwtService,
   ) {}
 
@@ -22,6 +24,9 @@ export class AuthService {
     switch (role) {
       case Role.DEAN:
         user = await this.deansService.findOneByUsername(username);
+        break;
+      case Role.HEAD:
+        user = await this.headsService.findOneByUsername(username);
         break;
       case Role.COACH:
         user = await this.coachesService.findOneByUsername(username);
@@ -53,6 +58,8 @@ export class AuthService {
         return this.studentsService.findOne(id);
       case Role.COACH:
         return this.coachesService.findOne(id);
+      case Role.HEAD:
+        return this.headsService.findOne(id);
       default:
         return this.deansService.findOne(id);
     }

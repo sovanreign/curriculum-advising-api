@@ -12,6 +12,7 @@ import { CurriculumsModule } from './curriculums/curriculums.module';
 import { CoursesModule } from './courses/courses.module';
 import { StudentCourseModule } from './student-course/student-course.module';
 import { AcadformsModule } from './acadforms/acadforms.module';
+import { HeadsModule } from './heads/heads.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AcadformsModule } from './acadforms/acadforms.module';
     CoursesModule,
     StudentCourseModule,
     AcadformsModule,
+    HeadsModule,
   ],
   controllers: [],
   providers: [],
