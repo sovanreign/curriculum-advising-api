@@ -4,6 +4,19 @@ import { passwordEncryption } from '../src/utils/password-encryption.util';
 const prisma = new PrismaClient();
 
 async function main() {
+  await prisma.schoolTerm.createMany({
+    data: [
+      {
+        sy: 'SY24-25',
+        semester: 'FIRST',
+      },
+      {
+        sy: 'SY24-25',
+        semester: 'SECOND',
+      },
+    ],
+  });
+
   await prisma.department.create({
     data: {
       code: 'SCIS',

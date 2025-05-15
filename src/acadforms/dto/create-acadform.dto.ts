@@ -11,4 +11,8 @@ export class CreateAcadformDto {
   @IsInt()
   @IsNotEmpty()
   studentId: number;
+
+  @IsInt()
+  @IsNotEmpty()
+  schoolTermId: number;
 }

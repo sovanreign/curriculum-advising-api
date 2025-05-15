@@ -42,6 +42,7 @@ export class CoursesController {
             year: row.year as YearLevel, // Adjust as needed if YearLevel is an enum
             curriculumId: Number(row.curriculumId),
             programId: Number(row.programId),
+            schoolTermId: Number(row.schoolTermId),
           });
         })
         .on('end', resolve)

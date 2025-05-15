@@ -32,6 +32,7 @@ export class StudentsService {
             data: {
               studentId: createdStudent.id,
               courseId: course.id,
+              schoolTermId: course.schoolTermId,
             },
           }),
         );

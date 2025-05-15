@@ -17,4 +17,8 @@ export class CreateStudentCourseDto {
   @IsInt()
   @IsNotEmpty()
   courseId: number;
+
+  @IsInt()
+  @IsNotEmpty()
+  schoolTermId: number;
 }

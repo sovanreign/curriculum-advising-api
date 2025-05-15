@@ -27,6 +27,7 @@ export class CoursesService {
             data: {
               studentId: student.id,
               courseId: createdCourse.id, // Use the created course's ID
+              schoolTermId: course.schoolTermId,
             },
           }),
         );
