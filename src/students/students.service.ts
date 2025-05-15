@@ -101,6 +101,7 @@ export class StudentsService {
                 curriculum: true,
               },
             },
+            schoolTerm: true,
           },
         },
       },
