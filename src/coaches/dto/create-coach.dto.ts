@@ -44,4 +44,8 @@ export class CreateCoachDto {
   @IsInt()
   @IsNotEmpty()
   programId: number;
+
+  @IsInt()
+  @IsNotEmpty()
+  schoolTermId: number;
 }

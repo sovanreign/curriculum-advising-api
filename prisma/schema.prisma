@@ -90,21 +90,23 @@ model Student {
 }
 
 model Coach {
-  id          Int          @id @default(autoincrement())
-  username    String       @unique
-  email       String       @unique
-  password    String
-  firstName   String
-  lastName    String
-  coachId     String       @unique
-  contact     String?
-  address     String?
-  role        Role         @default(COACH)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  programId   Int
-  assignments Assignment[]
-  program     Program      @relation(fields: [programId], references: [id], onDelete: Cascade)
+  id           Int          @id @default(autoincrement())
+  username     String       @unique
+  email        String       @unique
+  password     String
+  firstName    String
+  lastName     String
+  coachId      String       @unique
+  contact      String?
+  address      String?
+  role         Role         @default(COACH)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  programId    Int
+  assignments  Assignment[]
+  program      Program      @relation(fields: [programId], references: [id], onDelete: Cascade)
+  schoolTermId Int
+  schoolTerm   SchoolTerm   @relation(fields: [schoolTermId], references: [id])
 }
 
 model Assignment {
@@ -170,6 +172,7 @@ model SchoolTerm {
   id       Int       @id @default(autoincrement())
   name     String
   students Student[]
+  coaches  Coach[]
 }
 
 enum Semester {

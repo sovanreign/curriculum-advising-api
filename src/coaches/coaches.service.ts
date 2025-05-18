@@ -12,6 +12,7 @@ export class CoachesService {
   async uploadCoaches(coaches: CreateCoachDto[]) {
     for (const coach of coaches) {
       coach.programId = Number(coach.programId);
+      coach.schoolTermId = Number(coach.schoolTermId);
       coach.password = await passwordEncryption(coach.password); // This will now properly await
     }
 
@@ -28,7 +29,7 @@ export class CoachesService {
     });
   }
 
-  findAll(q?: string, filterByYearLevel?: string, filterByProgram?: number) {
+  findAll(q?: string, filterByProgram?: number, filterBySchoolTerm?: number) {
     const where: Prisma.CoachWhereInput = {};
 
     // Search query filter
@@ -49,6 +50,10 @@ export class CoachesService {
     // Program filter
     if (filterByProgram) {
       where.programId = filterByProgram;
+    }
+
+    if (filterBySchoolTerm) {
+      where.schoolTermId = filterBySchoolTerm;
     }
 
     return this.db.coach.findMany({
@@ -73,6 +78,7 @@ export class CoachesService {
           include: {
             student: {
               include: {
+                schoolTerm: true,
                 studentCourse: {
                   include: {
                     course: true,

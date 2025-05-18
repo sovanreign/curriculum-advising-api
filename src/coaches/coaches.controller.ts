@@ -51,8 +51,13 @@ export class CoachesController {
   findAll(
     @Query('q') q: string,
     @Query('filterByProgram') filterByProgram: string,
+    @Query('filterBySchoolTerm') filterBySchoolTerm: string,
   ) {
-    return this.coachesService.findAll(q, filterByProgram);
+    return this.coachesService.findAll(
+      q,
+      +filterByProgram,
+      +filterBySchoolTerm,
+    );
   }
 
   @Get(':id')
