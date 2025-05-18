@@ -147,32 +147,38 @@ model Course {
 }
 
 model StudentCourse {
-  id        Int      @id @default(autoincrement())
-  noTake    Int      @default(1)
-  remark    Remark   @default(HOLD)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  studentId Int
-  courseId  Int?
-  course    Course?  @relation(fields: [courseId], references: [id])
-  student   Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  id           Int        @id @default(autoincrement())
+  noTake       Int        @default(1)
+  remark       Remark     @default(HOLD)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  studentId    Int
+  courseId     Int?
+  course       Course?    @relation(fields: [courseId], references: [id])
+  student      Student    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  schoolTermId Int
+  schoolTerm   SchoolTerm @relation(fields: [schoolTermId], references: [id])
 }
 
 model AcadForm {
-  id             Int      @id @default(autoincrement())
+  id             Int        @id @default(autoincrement())
   recommendation String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
   studentId      Int
   subjectPlan    Json?
-  student        Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  student        Student    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  schoolTermId   Int
+  schoolTerm     SchoolTerm @relation(fields: [schoolTermId], references: [id])
 }
 
 model SchoolTerm {
-  id       Int       @id @default(autoincrement())
-  name     String
-  students Student[]
-  coaches  Coach[]
+  id             Int             @id @default(autoincrement())
+  name           String
+  students       Student[]
+  coaches        Coach[]
+  studentCourses StudentCourse[]
+  acadForms      AcadForm[]
 }
 
 enum Semester {
