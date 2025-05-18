@@ -11,6 +11,7 @@ import {
   Query,
   UseInterceptors,
   UploadedFile,
+  Req,
 } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
@@ -26,7 +27,11 @@ export class CoursesController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  async uploadCourses(@UploadedFile() file: Express.Multer.File) {
+  async uploadCourses(
+    @UploadedFile() file: Express.Multer.File,
+    @Body('curriculumId') curriculumIdRaw: string,
+  ) {
+    const curriculumId = Number(curriculumIdRaw);
     const records: CreateCourseDto[] = [];
     const stream = Readable.from(file.buffer.toString());
 
@@ -40,9 +45,8 @@ export class CoursesController {
             units: Number(row.units),
             sem: Number(row.sem),
             year: row.year as YearLevel, // Adjust as needed if YearLevel is an enum
-            curriculumId: Number(row.curriculumId),
+            curriculumId: curriculumId,
             programId: Number(row.programId),
-            schoolTermId: Number(row.schoolTermId),
           });
         })
         .on('end', resolve)
