@@ -12,7 +12,7 @@ export class SchoolTermsService {
   }
 
   findAll() {
-    return this.db.schoolTerm.findMany({});
+    return this.db.schoolTerm.findMany();
   }
 
   findOne(id: number) {

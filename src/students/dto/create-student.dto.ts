@@ -50,4 +50,8 @@ export class CreateStudentDto {
   @IsInt()
   @IsNotEmpty()
   programId: number;
+
+  @IsInt()
+  @IsNotEmpty()
+  schoolTermId: number;
 }

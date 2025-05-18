@@ -7,12 +7,22 @@ async function main() {
   await prisma.schoolTerm.createMany({
     data: [
       {
-        sy: 'SY24-25',
-        semester: 'FIRST',
+        name: '1st Sem. S/Y 2023-2024',
       },
       {
-        sy: 'SY24-25',
-        semester: 'SECOND',
+        name: '2nd Sem. S/Y 2023-2024',
+      },
+      {
+        name: 'Summer 2024',
+      },
+      {
+        name: '1st Sem. S/Y 2024-2025',
+      },
+      {
+        name: '2nd Sem. S/Y 2024-2025',
+      },
+      {
+        name: 'Summer 2025',
       },
     ],
   });
@@ -41,7 +51,7 @@ async function main() {
 
   await prisma.head.create({
     data: {
-      username: 'head',
+      username: 'programhead',
       password: pass,
       firstName: 'Elon',
       lastName: 'Musk',
@@ -50,15 +60,6 @@ async function main() {
       address: 'Silicon Valley',
       contact: '+0187654321',
       departmentId: 1,
-    },
-  });
-
-  await prisma.curriculum.create({
-    data: {
-      cmoName: 'KT',
-      code: 'KT',
-      effectivity: '1st sem 2024',
-      rev: 50,
     },
   });
 

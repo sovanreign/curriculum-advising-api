@@ -85,6 +85,8 @@ model Student {
   assignment    Assignment?
   program       Program         @relation(fields: [programId], references: [id], onDelete: Cascade)
   studentCourse StudentCourse[]
+  schoolTermId  Int
+  schoolTerm    SchoolTerm      @relation(fields: [schoolTermId], references: [id])
 }
 
 model Coach {
@@ -140,44 +142,34 @@ model Course {
   curriculum     Curriculum      @relation(fields: [curriculumId], references: [id], onDelete: Cascade)
   program        Program         @relation(fields: [programId], references: [id], onDelete: Cascade)
   studentCourses StudentCourse[]
-
-  SchoolTerm   SchoolTerm? @relation(fields: [schoolTermId], references: [id])
-  schoolTermId Int?
 }
 
 model StudentCourse {
-  id           Int        @id @default(autoincrement())
-  noTake       Int        @default(1)
-  remark       Remark     @default(HOLD)
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  studentId    Int
-  courseId     Int?
-  course       Course?    @relation(fields: [courseId], references: [id])
-  student      Student    @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  schoolTermId Int
-  schoolTerm   SchoolTerm @relation(fields: [schoolTermId], references: [id])
+  id        Int      @id @default(autoincrement())
+  noTake    Int      @default(1)
+  remark    Remark   @default(HOLD)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  studentId Int
+  courseId  Int?
+  course    Course?  @relation(fields: [courseId], references: [id])
+  student   Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
 }
 
 model AcadForm {
-  id             Int        @id @default(autoincrement())
+  id             Int      @id @default(autoincrement())
   recommendation String
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
   studentId      Int
   subjectPlan    Json?
-  student        Student    @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  schoolTermId   Int
-  schoolTerm     SchoolTerm @relation(fields: [schoolTermId], references: [id])
+  student        Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
 }
 
 model SchoolTerm {
-  id             Int             @id @default(autoincrement())
-  sy             String
-  semester       Semester
-  studentCourses StudentCourse[]
-  acadForms      AcadForm[]
-  courses        Course[]
+  id       Int       @id @default(autoincrement())
+  name     String
+  students Student[]
 }
 
 enum Semester {

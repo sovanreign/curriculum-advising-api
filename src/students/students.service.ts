@@ -4,6 +4,7 @@ import { UpdateStudentDto } from './dto/update-student.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { passwordEncryption } from 'src/utils/password-encryption.util';
 import { Prisma, YearLevel } from '@prisma/client';
+import { UpdateSchoolTermDto } from './dto/update-school-term.dto';
 
 @Injectable()
 export class StudentsService {
@@ -16,28 +17,29 @@ export class StudentsService {
         student.programId = Number(student.programId);
         student.password = await passwordEncryption(student.password);
 
+        student.schoolTermId = Number(student.schoolTermId);
+
         // Create the student and retrieve their ID
         const createdStudent = await prisma.student.create({
           data: student,
         });
 
         // Fetch all courses belonging to the student's program
-        const courses = await prisma.course.findMany({
-          where: { programId: createdStudent.programId },
-        });
+        // const courses = await prisma.course.findMany({
+        //   where: { programId: createdStudent.programId },
+        // });
 
         // Create StudentCourse records for the student with these courses
-        const studentCoursePromises = courses.map((course) =>
-          prisma.studentCourse.create({
-            data: {
-              studentId: createdStudent.id,
-              courseId: course.id,
-              schoolTermId: course.schoolTermId,
-            },
-          }),
-        );
+        // const studentCoursePromises = courses.map((course) =>
+        //   prisma.studentCourse.create({
+        //     data: {
+        //       studentId: createdStudent.id,
+        //       courseId: course.id,
+        //     },
+        //   }),
+        // );
 
-        await Promise.all(studentCoursePromises);
+        // await Promise.all(studentCoursePromises);
       }
 
       return { message: `${students.length} students uploaded successfully` };
@@ -54,7 +56,12 @@ export class StudentsService {
     });
   }
 
-  findAll(q?: string, filterByYearLevel?: string, filterByProgram?: number) {
+  findAll(
+    q?: string,
+    filterByYearLevel?: string,
+    filterByProgram?: number,
+    filterBySchoolTerm?: number,
+  ) {
     const where: Prisma.StudentWhereInput = {};
 
     // Search query filter
@@ -85,6 +92,10 @@ export class StudentsService {
       where.programId = filterByProgram;
     }
 
+    if (filterBySchoolTerm) {
+      where.schoolTermId = filterBySchoolTerm;
+    }
+
     return this.db.student.findMany({
       where,
       include: {
@@ -101,7 +112,6 @@ export class StudentsService {
                 curriculum: true,
               },
             },
-            schoolTerm: true,
           },
         },
       },
@@ -154,6 +164,19 @@ export class StudentsService {
     return this.db.student.deleteMany({
       where: {
         id: { in: ids },
+      },
+    });
+  }
+
+  async updateStudentsSchoolTerm(students: UpdateSchoolTermDto) {
+    return this.db.student.updateMany({
+      where: {
+        id: {
+          in: students.userIds,
+        },
+      },
+      data: {
+        schoolTermId: students.schoolTermId,
       },
     });
   }

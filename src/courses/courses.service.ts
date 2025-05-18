@@ -17,22 +17,22 @@ export class CoursesService {
         });
 
         // Find students in the same program
-        const students = await prisma.student.findMany({
-          where: { programId: course.programId },
-        });
+        // const students = await prisma.student.findMany({
+        //   where: { programId: course.programId },
+        // });
 
         // Create StudentCourse records for each student
-        const studentCoursePromises = students.map((student) =>
-          prisma.studentCourse.create({
-            data: {
-              studentId: student.id,
-              courseId: createdCourse.id, // Use the created course's ID
-              schoolTermId: course.schoolTermId,
-            },
-          }),
-        );
+        // const studentCoursePromises = students.map((student) =>
+        //   prisma.studentCourse.create({
+        //     data: {
+        //       studentId: student.id,
+        //       courseId: createdCourse.id, // Use the created course's ID
+        //       schoolTermId: course.schoolTermId,
+        //     },
+        //   }),
+        // );
 
-        await Promise.all(studentCoursePromises);
+        // await Promise.all(studentCoursePromises);
       }
 
       return { message: `${courses.length} courses uploaded successfully` };

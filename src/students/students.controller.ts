@@ -18,10 +18,16 @@ import { UpdateStudentDto } from './dto/update-student.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as csv from 'csv-parser';
 import { Readable } from 'stream';
+import { UpdateSchoolTermDto } from './dto/update-school-term.dto';
 
 @Controller('api/students')
 export class StudentsController {
   constructor(private readonly studentsService: StudentsService) {}
+
+  @Patch('update/schoolTerm')
+  updateStudentsSchoolTerm(@Body() body: UpdateSchoolTermDto) {
+    return this.studentsService.updateStudentsSchoolTerm(body);
+  }
 
   @Delete('bulk')
   async removeMany(@Body('ids') ids: number[]) {
@@ -57,8 +63,14 @@ export class StudentsController {
     @Query('q') q: string,
     @Query('filterByYearLevel') filterByYearLevel: string,
     @Query('filterByProgram') filterByProgram: string,
+    @Query('filterBySchoolTerm') filterBySchoolTerm: string,
   ) {
-    return this.studentsService.findAll(q, filterByYearLevel, +filterByProgram);
+    return this.studentsService.findAll(
+      q,
+      filterByYearLevel,
+      +filterByProgram,
+      +filterBySchoolTerm,
+    );
   }
 
   @Get(':id')
