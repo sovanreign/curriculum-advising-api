@@ -23,6 +23,15 @@ export class AcadformsService {
     });
   }
 
+  async findOneByStudentAndTerm(studentId: number, schoolTermId: number) {
+    return this.db.acadForm.findFirst({
+      where: {
+        studentId,
+        schoolTermId,
+      },
+    });
+  }
+
   findOneByStudent(id: number) {
     return this.db.acadForm.findFirstOrThrow({
       where: { studentId: id },

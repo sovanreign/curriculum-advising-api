@@ -8,6 +8,7 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { AcadformsService } from './acadforms.service';
 import { CreateAcadformDto } from './dto/create-acadform.dto';
@@ -28,7 +29,15 @@ export class AcadformsController {
   }
 
   @Get('student/:id')
-  findOneByStudent(@Param('id') id: string) {
+  findOneByStudent(
+    @Param('id') id: string,
+    @Query('schoolTermId') schoolTermId?: string,
+  ) {
+    // If `schoolTermId` is provided, use the service method with both filters
+    if (schoolTermId) {
+      return this.acadformsService.findOneByStudentAndTerm(+id, +schoolTermId);
+    }
+    // Else fallback to the original by-student lookup
     return this.acadformsService.findOneByStudent(+id);
   }
 
