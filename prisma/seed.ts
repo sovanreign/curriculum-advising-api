@@ -4,6 +4,11 @@ import { passwordEncryption } from '../src/utils/password-encryption.util';
 const prisma = new PrismaClient();
 
 async function main() {
+  // ADD SCHOOL TERM
+  // Copy and add the code below (replace with your name of school term)
+  // {
+  //     name: '1st Sem. S/Y 2023-2024',
+  //  },
   await prisma.schoolTerm.createMany({
     data: [
       {
